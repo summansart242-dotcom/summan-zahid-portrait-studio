@@ -189,8 +189,7 @@
         <h2 id="github-title">Connect GitHub</h2>
         <button class="close-button" type="button" data-close="github-dialog" aria-label="Close GitHub settings">×</button>
       </div>
-      <p id="github-help" class="help">Enter the repository for your portfolio and a fine-grained GitHub token with <strong>Contents</strong> read and write access for that repository. The token stays in this tab until you close or reload it.</p>
-      <p class="help"><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token" target="_blank" rel="noreferrer">How to create a GitHub token ↗</a></p>
+      <p id="github-help" class="help">Connect the portfolio’s GitHub repository to publish saved changes. The token stays in this tab until you close or reload it.</p>
       <div id="github-fields">
         <label class="field">Repository
           <input id="repository" placeholder="your-name/your-portfolio" required maxlength="160" spellcheck="false" autocomplete="off">
@@ -198,6 +197,8 @@
         <label class="field">Publishing branch
           <input id="branch" value="main" required maxlength="100" spellcheck="false" autocomplete="off">
         </label>
+        <p class="help"><a id="github-token-link" href="https://github.com/settings/personal-access-tokens/new?contents=write" target="_blank" rel="noreferrer">Create a fine-grained GitHub token ↗</a></p>
+        <p class="help">Choose <strong>Only select repositories</strong> on GitHub, then select your portfolio repository. The link fills in Contents read and write access.</p>
         <label class="field">GitHub token
           <input id="token" type="password" required spellcheck="false" autocomplete="new-password">
         </label>

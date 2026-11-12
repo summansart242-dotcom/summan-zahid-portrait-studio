@@ -537,7 +537,25 @@ function showGitHubDialog() {
   $("github-dialog").showModal();
 }
 
+function pagesRepository() {
+  const owner = baseUrl.hostname.match(/^([a-z\d-]+)\.github\.io$/i)?.[1];
+  const project = baseUrl.pathname.split("/").find(Boolean) || baseUrl.hostname;
+  return owner && /^[a-z\d_.-]+$/i.test(project) ? owner + "/" + project : "";
+}
+
+function updateTokenLink() {
+  const repository = $("repository").value.trim();
+  const owner = repository.match(/^(?:https:\/\/(?:www\.)?github\.com\/)?([a-z\d-]+)\//i)?.[1]
+    ?? repository.match(/^https:\/\/([a-z\d-]+)\.github\.io(?:\/|$)/i)?.[1];
+  const url = new URL("https://github.com/settings/personal-access-tokens/new");
+  url.searchParams.set("name", "Portrait Studio publishing");
+  url.searchParams.set("contents", "write");
+  if (owner) url.searchParams.set("target_name", owner);
+  $("github-token-link").href = url.href;
+}
+
 function loadRepositorySettings() {
+  $("repository").value = pagesRepository();
   try {
     const settings = JSON.parse(localStorage.getItem(repositorySettingsKey));
     if (settings?.repository && settings?.branch) {
@@ -547,8 +565,10 @@ function loadRepositorySettings() {
   } catch {
     // The browser may block storage. The connection form still works.
   }
+  updateTokenLink();
 }
 
+$("repository").addEventListener("input", updateTokenLink);
 $("github-settings").addEventListener("click", showGitHubDialog);
 $("github-dialog").addEventListener("cancel", (event) => {
   if (busy) event.preventDefault();
@@ -575,8 +595,14 @@ $("github-form").addEventListener("submit", (event) => {
     showNotice("Connecting to GitHub…", "", $("github-message"));
     publisher ??= await import("./publisher.js");
     connection = await publisher.connectGitHub({ repository, branch, token });
+    $("repository").value = connection.repository || repository;
+    $("branch").value = connection.branch || branch;
+    updateTokenLink();
     try {
-      localStorage.setItem(repositorySettingsKey, JSON.stringify({ repository, branch }));
+      localStorage.setItem(repositorySettingsKey, JSON.stringify({
+        repository: $("repository").value,
+        branch: $("branch").value
+      }));
     } catch {
       // The token stays in memory. Repository and branch can be re-entered.
     }
@@ -709,7 +735,7 @@ $("publish").addEventListener("click", () => {
     renderArtwork();
     renderCommissions();
     showConnection();
-    let message = "Changes saved to GitHub. GitHub Pages will update the live site.";
+    let message = "Changes saved to GitHub. Check the Pages deployment to see when they’re live.";
     try {
       await storeDraft();
       saved = true;
@@ -718,6 +744,12 @@ $("publish").addEventListener("click", () => {
       saved = false;
     }
     showNotice(message);
+    const deployment = document.createElement("a");
+    deployment.href = "https://github.com/" + connection.repository + "/actions/workflows/pages.yml";
+    deployment.rel = "noreferrer";
+    deployment.target = "_blank";
+    deployment.textContent = "Check Pages deployment ↗";
+    $("notice").append(deployment);
     if (result.commitUrl) {
       const link = document.createElement("a");
       link.href = result.commitUrl;

@@ -7,7 +7,7 @@ The portfolio is a static website in `dist`. The portfolio and Studio work at a 
 1. Open **Studio** at the site's `studio/` address.
 2. Edit the artist profile, upload or reorder artwork, set individual prices, and choose the homepage portrait. Update commission details, frequently asked questions, and contact and social links.
 3. Use **Save changes** to keep edits in this browser and **Preview** to see them in the portfolio.
-4. To make the updates visible to everyone, use **Live publishing** with access to the GitHub repository. GitHub Pages republishes after changes are saved to the repository.
+4. To make the updates visible to everyone, open **Live publishing settings**, connect with your portfolio’s GitHub token, and click **Publish live**. Follow **View deployment status** and wait for a green check, then refresh the portfolio.
 
 ## Set up GitHub Pages
 

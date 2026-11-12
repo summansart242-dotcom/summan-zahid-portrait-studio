@@ -31,10 +31,10 @@ function requestFor(repository, token) {
 }
 
 export async function connectGitHub({ repository, branch = "main", token }) {
-  const target = repository.trim();
+  const target = repository.trim().replace(/^https:\/\/(?:www\.)?github\.com\//i, "").replace(/\/$/, "").replace(/\.git$/i, "");
   const sourceBranch = branch.trim() || "main";
   if (!/^[a-z\d][a-z\d-]*\/[a-z\d_.-]+$/i.test(target) || /\/\.{1,2}$/.test(target)) {
-    throw new Error("Enter your GitHub repository as owner/repository.");
+    throw new Error("Enter owner/repository or paste the repository’s GitHub URL.");
   }
   if (!/^[\w.-]+(?:\/[\w.-]+)*$/.test(sourceBranch) || sourceBranch.includes("..") || sourceBranch.split("/").some(part => part.startsWith(".") || part.endsWith(".lock") || part.endsWith("."))) {
     throw new Error("Enter a valid GitHub branch name.");

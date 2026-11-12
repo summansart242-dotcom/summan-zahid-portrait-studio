@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -22,12 +23,43 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.retry_deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
+        id: upload
         with:
           path: dist
+      - name: Wait for GitHub to list the uploaded site
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGES_ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+        run: |
+          if [[ ! "$PAGES_ARTIFACT_ID" =~ ^[0-9]+$ ]]; then
+            echo "::error::The Pages upload did not return an artifact ID."
+            exit 1
+          fi
+          for attempt in {1..10}; do
+            if [[ "$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=github-pages" \
+              --jq ".artifacts | any(.id == $PAGES_ARTIFACT_ID and .expired == false)")" == true ]]; then
+              exit 0
+            fi
+            if (( attempt < 10 )); then sleep 3; fi
+          done
+          echo "::error::GitHub did not list the uploaded site in time to start deployment."
+          exit 1
       - uses: actions/deploy-pages@v5
         id: deployment
+        continue-on-error: true
+      - name: Give GitHub time to register the upload
+        if: steps.deployment.outcome == 'failure' && steps.deployment.outputs.page_url == ''
+        run: sleep 5
+      - name: Retry Pages startup
+        if: steps.deployment.outcome == 'failure' && steps.deployment.outputs.page_url == ''
+        uses: actions/deploy-pages@v5
+        id: retry_deployment
+      - name: Report a failed Pages deployment
+        if: steps.deployment.outcome == 'failure' && steps.deployment.outputs.page_url != ''
+        run: exit 1
