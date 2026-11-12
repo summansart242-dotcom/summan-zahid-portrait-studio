@@ -13,8 +13,8 @@
   "pinterest": "",
   "behance": "",
   "youtube": "",
-  "featuredId": "",
-  "aboutImage": "",
+  "featuredId": "ed20dcbc-bde0-4c50-a1c0-9ea53d3a3ee7",
+  "aboutImage": "images/artwork-71f29acb8f86e3179f4685fb95a5b7ac1af6fc88f0606a9d4b33ab5710afcaf5.png",
   "commissionSteps": [
     {
       "name": "Share a photograph",
@@ -68,5 +68,42 @@
       "answer": "We’ll agree on collection or delivery when we confirm the commission. Let me know where the portrait needs to go."
     }
   ],
-  "artworks": []
+  "artworks": [
+    {
+      "id": "ed20dcbc-bde0-4c50-a1c0-9ea53d3a3ee7",
+      "title": "Art1",
+      "medium": "",
+      "size": "",
+      "price": "",
+      "description": "",
+      "alt": "Test1",
+      "image": "images/artwork-3293742a0e3d3f9907017475ed257e3269c4711347e87966af3a830ab65bc184.png",
+      "width": 1320,
+      "height": 1737
+    },
+    {
+      "id": "dafbe308-fc9c-4268-836e-418b7d96c417",
+      "title": "Art3",
+      "medium": "",
+      "size": "",
+      "price": "",
+      "description": "",
+      "alt": "Test3",
+      "image": "images/artwork-4eb8b948cc43bb3ca154a029e31f5b1c88b2ea7b3416ff8a1a56a836e8cec6e9.png",
+      "width": 1320,
+      "height": 1597
+    },
+    {
+      "id": "5cfb61b4-7eba-4cb0-9467-f9cdca12b8e3",
+      "title": "Art2",
+      "medium": "",
+      "size": "",
+      "price": "",
+      "description": "",
+      "alt": "Test2",
+      "image": "images/artwork-cec694f4f0cd9de1a5d631e6fd9ea26cbd9553184984bdb431dd19380bddcdea.png",
+      "width": 1320,
+      "height": 1632
+    }
+  ]
 }
