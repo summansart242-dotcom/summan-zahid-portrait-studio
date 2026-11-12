@@ -1,0 +1,72 @@
+{
+  "artistName": "Summan Zahid",
+  "tagline": "Portraits, drawn by hand.",
+  "intro": "Custom portraits from your photographs, made for gifts, milestones, and the people you want to remember.",
+  "bio": "I make portraits and sketches of people. I look for the expression, gesture, or detail that makes someone immediately recognizable. A drawing can mark an occasion or capture someone as you remember them.",
+  "commissions": "Commission a portrait of one person, a couple, or a group. The quote depends on the size, the number of people, and the detail in the drawing.",
+  "contactIntro": "Tell me who you’d like drawn and what you have in mind. I’ll help you choose the size and composition for your portrait.",
+  "contactEmail": "",
+  "whatsapp": "",
+  "instagram": "",
+  "facebook": "",
+  "tiktok": "",
+  "pinterest": "",
+  "behance": "",
+  "youtube": "",
+  "featuredId": "",
+  "aboutImage": "",
+  "commissionSteps": [
+    {
+      "name": "Share a photograph",
+      "details": "Choose a clear, well-lit reference photo and tell me who you’d like drawn. You can share more than one photo if it helps show their features."
+    },
+    {
+      "name": "Agree on the details",
+      "details": "Tell me the size and date you have in mind. We’ll confirm the composition, price, and timing before I begin."
+    },
+    {
+      "name": "Receive your portrait",
+      "details": "We’ll agree on how you’ll receive the finished drawing when we confirm your commission."
+    }
+  ],
+  "commissionRates": [
+    {
+      "name": "Individual portrait",
+      "price": "Quote on request",
+      "details": "A drawing of one person, composed around their expression and likeness."
+    },
+    {
+      "name": "Two-person portrait",
+      "price": "Quote on request",
+      "details": "Two people in one composition, drawn from a shared photo or separate references."
+    },
+    {
+      "name": "Family or group portrait",
+      "price": "Quote on request",
+      "details": "A group drawing with pricing based on the number of people, size, and detail."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What kind of photo works best?",
+      "answer": "A sharp, well-lit photo with a clear view of each face is a good starting point. Send an alternate photo if a feature is hard to see."
+    },
+    {
+      "question": "Can you draw people from separate photos?",
+      "answer": "You can share a photo of each person. We’ll discuss how they can fit into one composition when we review the references."
+    },
+    {
+      "question": "How much does a portrait cost?",
+      "answer": "The quote depends on the size, the number of people, and the level of detail. I’ll confirm the price with you before starting."
+    },
+    {
+      "question": "How long will my portrait take?",
+      "answer": "Timing depends on the drawing and current availability. If you have an occasion or a deadline, include the date in your first message."
+    },
+    {
+      "question": "How will I receive the portrait?",
+      "answer": "We’ll agree on collection or delivery when we confirm the commission. Let me know where the portrait needs to go."
+    }
+  ],
+  "artworks": []
+}

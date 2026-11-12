@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'self'">
+  <title>Portfolio Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23652f37'/%3E%3Cpath d='m8 24 2-6L21 7l4 4-11 11-6 2Zm10-14 4 4' fill='none' stroke='%23f7f3ed' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./studio.css">
+  <script type="module" src="./studio.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#editor">Skip to editor</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="wordmark" href="../" aria-label="View public portfolio">
+        <span class="mark" aria-hidden="true">S</span>
+        <span><strong>Portfolio Studio</strong><small>View portfolio ↗</small></span>
+      </a>
+      <div class="toolbar" id="toolbar">
+        <span class="save-state" id="save-state">Loading portfolio…</span>
+        <button class="button" type="button" id="preview" disabled>Preview</button>
+        <button class="button primary" type="button" id="save" disabled>Save changes</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="editor" class="layout">
+    <aside class="sidebar" aria-label="Studio navigation">
+      <nav aria-label="Portfolio sections">
+        <a class="nav-item" href="#profile" aria-current="page"><span>Profile</span><small>Homepage and artist bio</small></a>
+        <a class="nav-item" href="#artwork"><span>Artwork <span class="count" id="artwork-count"></span></span><small>Gallery and featured piece</small></a>
+        <a class="nav-item" href="#commissions"><span>Commissions</span><small>Process, prices and FAQs</small></a>
+        <a class="nav-item" href="#contact-social"><span>Contact &amp; Social</span><small>Contact details and links</small></a>
+      </nav>
+      <details class="connection-card" id="publishing-settings">
+        <summary>Live publishing settings</summary>
+        <p id="connection-state">Saved changes and previews stay on this device. Connect GitHub when you’re ready to update the public site.</p>
+        <button id="github-settings" class="text-button" type="button" disabled>Connect GitHub</button>
+        <button id="review-github" class="text-button" type="button" hidden>Review GitHub version</button>
+        <button class="button" type="button" id="publish" disabled>Publish live</button>
+      </details>
+    </aside>
+
+    <div class="work-area">
+      <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
+      <div id="editor-content" hidden>
+        <section class="panel" id="profile" aria-labelledby="profile-title">
+          <div class="panel-heading">
+            <h1 id="profile-title" tabindex="-1">Artist profile</h1>
+            <p>Set the name, introduction and story visitors see on the portfolio.</p>
+          </div>
+          <div class="sheet">
+            <h2>Homepage</h2>
+            <label class="field">Artist name
+              <input id="artist-name" data-field="artistName" maxlength="100" autocomplete="off">
+            </label>
+            <label class="field">Main headline
+              <input id="tagline" data-field="tagline" maxlength="130">
+            </label>
+            <label class="field">Short introduction
+              <textarea id="intro" data-field="intro" rows="3" maxlength="500"></textarea>
+            </label>
+          </div>
+          <div class="sheet">
+            <h2>About the artist</h2>
+            <label class="field">Biography
+              <textarea id="bio" data-field="bio" rows="6" maxlength="3000"></textarea>
+            </label>
+            <div class="image-field">
+              <img id="about-image" class="about-image" alt="Current about image" hidden>
+              <div>
+                <h3>About photo <span class="optional">Optional</span></h3>
+                <p class="help">Use a photo of the artist or her workspace.</p>
+                <div class="inline-actions">
+                  <label class="button file-button"><input id="about-upload" type="file" accept="image/jpeg,image/png,image/webp"><span id="about-upload-label">Choose photo</span></label>
+                  <button id="about-remove" class="text-button remove" type="button" hidden>Remove photo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="artwork" aria-labelledby="artwork-title" hidden>
+          <div class="panel-heading artwork-heading">
+            <div>
+              <h1 id="artwork-title" tabindex="-1">Artwork</h1>
+              <p>Add pieces, choose the featured image, and arrange the gallery.</p>
+            </div>
+            <label class="button primary file-button"><input id="artwork-upload" type="file" accept="image/jpeg,image/png,image/webp" multiple><span>Add artwork</span></label>
+          </div>
+          <div id="artwork-list"></div>
+        </section>
+
+        <section class="panel" id="commissions" aria-labelledby="commissions-title" hidden>
+          <div class="panel-heading">
+            <h1 id="commissions-title" tabindex="-1">Commissions</h1>
+            <p>Explain what clients can request and what to expect.</p>
+          </div>
+          <div class="sheet">
+            <label class="field">Commission information
+              <textarea id="commission-info" data-field="commissions" rows="6" maxlength="3000"></textarea>
+              <small>Include the subjects and sizes you offer, how long a piece takes, and what clients should send.</small>
+            </label>
+          </div>
+          <div class="sheet">
+            <div class="sheet-heading">
+              <div>
+                <h2>Commission process</h2>
+                <p class="help">Describe each step from the first inquiry to delivery.</p>
+              </div>
+              <button class="button" id="add-step" type="button">Add a step</button>
+            </div>
+            <div id="commission-steps"></div>
+          </div>
+          <div class="sheet">
+            <div class="sheet-heading">
+              <div>
+                <h2>Commission rates</h2>
+                <p class="help">Include the currency, or leave the price blank to show “Quote on request”.</p>
+              </div>
+              <button class="button" id="add-rate" type="button">Add a rate</button>
+            </div>
+            <div id="commission-rates"></div>
+          </div>
+          <div class="sheet">
+            <div class="sheet-heading">
+              <div>
+                <h2>Frequently asked questions</h2>
+                <p class="help">Answer the questions clients ask before commissioning a piece.</p>
+              </div>
+              <button class="button" id="add-faq" type="button">Add an FAQ</button>
+            </div>
+            <div id="faqs"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="contact-social" aria-labelledby="contact-social-title" hidden>
+          <div class="panel-heading">
+            <h1 id="contact-social-title" tabindex="-1">Contact &amp; Social</h1>
+            <p>Choose how visitors can reach you and follow your work.</p>
+          </div>
+          <div class="sheet">
+            <h2>Public contact details</h2>
+            <p class="help sheet-help">Enter the details you want visitors to see. You can leave any channel blank.</p>
+            <label class="field">Contact introduction
+              <textarea id="contact-intro" data-field="contactIntro" rows="3" maxlength="600"></textarea>
+            </label>
+            <label class="field">Email address
+              <input id="email" data-field="contactEmail" type="email" maxlength="254" placeholder="artist@example.com">
+            </label>
+            <label class="field">WhatsApp number
+              <input id="whatsapp" data-field="whatsapp" type="tel" maxlength="30" placeholder="+92 300 1234567">
+              <small>Include the country code.</small>
+            </label>
+          </div>
+          <div class="sheet">
+            <h2>Social links</h2>
+            <label class="field">Instagram
+              <input id="instagram" data-field="instagram" maxlength="500" placeholder="@artist or https://www.instagram.com/artist/">
+            </label>
+            <label class="field">Facebook
+              <input id="facebook" data-field="facebook" type="url" maxlength="500" placeholder="https://www.facebook.com/artist">
+            </label>
+            <label class="field">TikTok
+              <input id="tiktok" data-field="tiktok" type="url" maxlength="500" placeholder="https://www.tiktok.com/@artist">
+            </label>
+            <label class="field">Pinterest
+              <input id="pinterest" data-field="pinterest" type="url" maxlength="500" placeholder="https://www.pinterest.com/artist/">
+            </label>
+            <label class="field">Behance
+              <input id="behance" data-field="behance" type="url" maxlength="500" placeholder="https://www.behance.net/artist">
+            </label>
+            <label class="field">YouTube
+              <input id="youtube" data-field="youtube" type="url" maxlength="500" placeholder="https://www.youtube.com/@artist">
+            </label>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="github-dialog" aria-labelledby="github-title">
+    <form id="github-form">
+      <div class="dialog-heading">
+        <h2 id="github-title">Connect GitHub</h2>
+        <button class="close-button" type="button" data-close="github-dialog" aria-label="Close GitHub settings">×</button>
+      </div>
+      <p id="github-help" class="help">Enter the repository for your portfolio and a fine-grained GitHub token with <strong>Contents</strong> read and write access for that repository. The token stays in this tab until you close or reload it.</p>
+      <p class="help"><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token" target="_blank" rel="noreferrer">How to create a GitHub token ↗</a></p>
+      <div id="github-fields">
+        <label class="field">Repository
+          <input id="repository" placeholder="your-name/your-portfolio" required maxlength="160" spellcheck="false" autocomplete="off">
+        </label>
+        <label class="field">Publishing branch
+          <input id="branch" value="main" required maxlength="100" spellcheck="false" autocomplete="off">
+        </label>
+        <label class="field">GitHub token
+          <input id="token" type="password" required spellcheck="false" autocomplete="new-password">
+        </label>
+      </div>
+      <p class="notice" id="github-message" role="status" hidden></p>
+      <div class="dialog-actions">
+        <button class="button" type="button" data-close="github-dialog">Close</button>
+        <button id="disconnect" class="button" type="button" hidden>Disconnect</button>
+        <button id="connect" class="button primary" type="submit">Connect</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="sync-dialog" aria-labelledby="sync-title">
+    <div class="dialog-heading">
+      <h2 id="sync-title">Review GitHub version</h2>
+      <button class="close-button" type="button" data-close="sync-dialog" aria-label="Close version review">×</button>
+    </div>
+    <p class="help">GitHub has a different version of the portfolio. Load that version to replace this browser’s draft, or keep your draft and continue editing.</p>
+    <div class="dialog-actions">
+      <button id="load-remote" class="button" type="button">Load GitHub version</button>
+      <button id="keep-draft" class="button primary" type="button">Keep my draft</button>
+    </div>
+  </dialog>
+</body>
+</html>

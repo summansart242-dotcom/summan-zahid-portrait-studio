@@ -1,0 +1,42 @@
+[
+  {
+    "id": "three-quarter",
+    "title": "Individual portrait",
+    "medium": "Graphite and charcoal illustration",
+    "description": "A three-quarter composition with soft shading and loose pencil marks around the hair.",
+    "alt": "Illustrated portrait of a woman with dark hair tied back and a small earring",
+    "image": "images/editorial-three-quarter.webp",
+    "width": 1122,
+    "height": 1402
+  },
+  {
+    "id": "two-person",
+    "title": "Two-person portrait",
+    "medium": "Charcoal illustration",
+    "description": "A close double portrait composed around the way two people lean into each other.",
+    "alt": "Charcoal illustration of two people leaning shoulder to shoulder",
+    "image": "images/editorial-two-person.webp",
+    "width": 627,
+    "height": 627
+  },
+  {
+    "id": "character",
+    "title": "Character study",
+    "medium": "Graphite illustration",
+    "description": "A closely observed study with fine lines around the eyes and textured shading in the beard.",
+    "alt": "Graphite illustration of an older bearded man looking to the left",
+    "image": "images/editorial-character.webp",
+    "width": 627,
+    "height": 627
+  },
+  {
+    "id": "profile",
+    "title": "Profile study",
+    "medium": "Charcoal illustration",
+    "description": "A side profile with deep charcoal tones in the hair and lighter strokes across the face.",
+    "alt": "Charcoal illustration of a woman in profile with a pendant earring",
+    "image": "images/editorial-profile.webp",
+    "width": 627,
+    "height": 627
+  }
+]
